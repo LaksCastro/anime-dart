@@ -68,29 +68,29 @@ void main() {
       final search5 = 'atts';
       final search6 = 'th      wgc rm';
 
-      expect(hasMatch(target1, search1), true);
-      expect(hasMatch(target2, search1), false);
-      expect(hasMatch(target3, search1), false);
+      expect(hasMatch(target1, search1), isTrue);
+      expect(hasMatch(target2, search1), isFalse);
+      expect(hasMatch(target3, search1), isFalse);
 
-      expect(hasMatch(target1, search2), true);
-      expect(hasMatch(target2, search2), false);
-      expect(hasMatch(target3, search2), false);
+      expect(hasMatch(target1, search2), isTrue);
+      expect(hasMatch(target2, search2), isFalse);
+      expect(hasMatch(target3, search2), isFalse);
 
-      expect(hasMatch(target1, search3), false);
-      expect(hasMatch(target2, search3), true);
-      expect(hasMatch(target3, search3), false);
+      expect(hasMatch(target1, search3), isFalse);
+      expect(hasMatch(target2, search3), isTrue);
+      expect(hasMatch(target3, search3), isFalse);
 
-      expect(hasMatch(target1, search4), false);
-      expect(hasMatch(target2, search4), true);
-      expect(hasMatch(target3, search4), false);
+      expect(hasMatch(target1, search4), isFalse);
+      expect(hasMatch(target2, search4), isTrue);
+      expect(hasMatch(target3, search4), isFalse);
 
-      expect(hasMatch(target1, search5), true);
-      expect(hasMatch(target2, search5), false);
-      expect(hasMatch(target3, search5), false);
+      expect(hasMatch(target1, search5), isTrue);
+      expect(hasMatch(target2, search5), isFalse);
+      expect(hasMatch(target3, search5), isFalse);
 
-      expect(hasMatch(target1, search6), false);
-      expect(hasMatch(target2, search6), false);
-      expect(hasMatch(target3, search6), true);
+      expect(hasMatch(target1, search6), isFalse);
+      expect(hasMatch(target2, search6), isFalse);
+      expect(hasMatch(target3, search6), isTrue);
     });
   });
 }

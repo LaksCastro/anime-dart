@@ -13,7 +13,10 @@ void main() {
         for (var i = 0; i < precision; i++) randomInt(min: min, max: max)
       ];
 
-      expect(results.every((result) => result >= min && result < max), true);
+      for (final result in results) {
+        expect(result, greaterThanOrEqualTo(min));
+        expect(result, lessThan(max));
+      }
     });
     test('negative numbers', () {
       final min = -10, max = 0;
@@ -22,7 +25,10 @@ void main() {
         for (var i = 0; i < precision; i++) randomInt(min: min, max: max)
       ];
 
-      expect(results.every((result) => result >= min && result < max), true);
+      for (final result in results) {
+        expect(result, greaterThanOrEqualTo(min));
+        expect(result, lessThan(max));
+      }
     });
     test('zero range', () {
       final value = -10;
@@ -31,7 +37,9 @@ void main() {
         for (var i = 0; i < precision; i++) randomInt(min: value, max: value),
       ];
 
-      expect(results.every((result) => result == value), true);
+      for (final result in results) {
+        expect(result, equals(value));
+      }
     });
     test('max and min values', () {
       final min = 0, max = 2;
@@ -40,8 +48,13 @@ void main() {
         for (var i = 0; i < precision; i++) randomInt(min: min, max: max),
       ];
 
-      expect(results.every((result) => result < max), true);
-      expect(results.any((result) => result == min), true);
+      for (final result in results) {
+        expect(result, greaterThanOrEqualTo(min));
+        expect(result, lessThan(max));
+        expect(result == 1 || result == 0, isTrue);
+      }
+
+      expect(results.any((result) => result == min), isTrue);
     });
     test('invalid range', () {
       final min = -10, max = -20;
@@ -55,12 +68,18 @@ void main() {
   });
   group('randomDouble() method', () {
     test('positive numbers', () {
+      final min = 0.0, max = 5.0;
+
       final results = <double>[
-        for (var i = 0; i < precision; i++) randomDouble(min: 0.0, max: 5.0)
+        for (var i = 0; i < precision; i++) randomDouble(min: min, max: max)
       ];
 
-      expect(results.every((result) => result >= 0.0 && result <= 5.0), true);
-      expect(results.any((result) => result % 1 != 0), true);
+      for (final result in results) {
+        expect(result, greaterThanOrEqualTo(min));
+        expect(result, lessThan(max));
+      }
+
+      expect(results.any((result) => result % 1 != 0), isTrue);
     });
 
     test('negative numbers', () {
@@ -70,8 +89,12 @@ void main() {
         for (var i = 0; i < precision; i++) randomDouble(min: min, max: max)
       ];
 
-      expect(results.every((result) => result >= min && result < max), true);
-      expect(results.any((result) => result % 1 != 0.0), true);
+      for (final result in results) {
+        expect(result, greaterThanOrEqualTo(min));
+        expect(result, lessThan(max));
+      }
+
+      expect(results.any((result) => result % 1 != 0.0), isTrue);
     });
     test('zero range', () {
       final value = -10.5;
@@ -80,7 +103,9 @@ void main() {
         for (var i = 0; i < precision; i++) randomDouble(min: value, max: value)
       ];
 
-      expect(results.every((result) => result == value), true);
+      for (final result in results) {
+        expect(result, equals(value));
+      }
     });
     test('invalid range', () {
       final min = -10.0, max = -15.0;
@@ -99,7 +124,9 @@ void main() {
         for (var i = 0; i < precision; i++) randomDouble(min: min, max: max),
       ];
 
-      expect(results.every((result) => result < max), true);
+      for (final result in results) {
+        expect(result, lessThan(max));
+      }
     });
   });
 }
