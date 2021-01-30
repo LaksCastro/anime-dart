@@ -129,30 +129,29 @@ void main() {
       }
     });
   });
-  group('secureRandomString() method', () {
+  group('secureString() method', () {
     test('basic usage', () {
-      expect(secureRandomString(length: 0).length, 0);
-      expect(secureRandomString(length: 10).length, 10);
-      expect(secureRandomString(length: 1).length, 1);
+      expect(secureString(length: 0).length, 0);
+      expect(secureString(length: 10).length, 10);
+      expect(secureString(length: 1).length, 1);
 
       final regExp1 = RegExp('^[a-z]{5}\$');
       final regExp2 = RegExp('^[a-e]{5}\$');
 
       expect(
-        secureRandomString(length: 5, charset: 'abcdefghijklmnopqrstuvwxyz')
-            .length,
+        secureString(length: 5, charset: 'abcdefghijklmnopqrstuvwxyz').length,
         5,
       );
 
       expect(
         regExp1.hasMatch(
-          secureRandomString(length: 5, charset: 'abcdefghijklmnopqrstuvwxyz'),
+          secureString(length: 5, charset: 'abcdefghijklmnopqrstuvwxyz'),
         ),
         isTrue,
       );
       expect(
         regExp2.hasMatch(
-          secureRandomString(length: 5, charset: 'abcde'),
+          secureString(length: 5, charset: 'abcde'),
         ),
         isTrue,
       );

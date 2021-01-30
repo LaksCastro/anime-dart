@@ -20,7 +20,7 @@ int randomInt({
   return min + _randomValue(secure, max.toDouble(), min.toDouble()).toInt();
 }
 
-String secureRandomString({int length = 128, String charset}) {
+String secureString({int length = 128, String charset}) {
   final defaultCharset =
       'abcdefghijklmnopqrstuvwxyzABCDEFGHYJKLMNOPQRSTUVWXYZ0123456789~_-.';
 
