@@ -1,1 +1,0 @@
-library app_core;
