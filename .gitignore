@@ -44,3 +44,4 @@ app.*.map.json
 !.env.example
 
 pubspec.lock
+.metadata
