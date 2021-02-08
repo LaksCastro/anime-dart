@@ -1,5 +1,4 @@
 import 'package:anime_dart/server/helpers/utils/date_utils.dart';
-import 'package:anime_dart/server/helpers/utils/list_utils.dart';
 import 'package:test/test.dart';
 
 void main() {
