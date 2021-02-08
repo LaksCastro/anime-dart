@@ -42,3 +42,5 @@ app.*.map.json
 
 .env*
 !.env.example
+
+pubspec.lock
