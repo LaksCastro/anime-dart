@@ -46,6 +46,10 @@
 <br>
 <br>
 
+## Files
+
+### - [Latest Release, Download Link](https://github.com/AnimeFlitch/flitch/releases/download/untagged-b1f1d596139c72a2f14b/app-release.apk)
+
 ## Printscreens - Dark Mode
 
 <table>
@@ -144,12 +148,6 @@
 
 ## Arquivos de instalação para Android
 Nesta release estou optando por oferecer o fat apk (arquivo com os binários das 3 arquiteturas do Android), portanto, basta scanear o QRCode abaixo e instalar, sem se preocupar com a arquitetura.
-
-## Files
-<img src="https://github.com/LaksCastro/anime-dart/blob/master/assets/all-v1.0.2.png" width="150" align="left">
-
-- ### [Apk Download](https://github.com/LaksCastro/anime-dart/releases/download/v1.0.2/app-release.apk)
-  - A fat APK is a single APK that contains binaries for multiple ABIs embedded within it. This has the benefit that the single APK runs on multiple architectures and thus has wider compatibility, but it has the drawback that its file size is much larger, causing users to download and store more bytes when installing your application. When building APKs instead of app bundles, it is strongly recommended to build split APKs, as described in build an APK using the --split-per-abi flag.
 
  ([Flutter Docs](https://flutter.dev/docs/deployment/android#what-is-a-fat-apk)).
 
