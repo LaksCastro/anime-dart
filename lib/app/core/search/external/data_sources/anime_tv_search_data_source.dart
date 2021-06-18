@@ -6,7 +6,7 @@ import 'package:anime_dart/app/core/search/infra/data_sources/search_data_source
 import 'package:anime_dart/app/core/search/infra/models/anime_model.dart';
 
 class AnimeTvSearchDataSource implements SearchDataSource {
-  final _baseUrl = "https://appanimeplus.tk/api-animesbr-10.php";
+  final _baseUrl = "https://appanimeplus.tk/meuanimetv-40.php";
   final _imageBaseUrl = "https://cdn.appanimeplus.tk/img/";
   final _httpHeaders = {
     "User-Agent":

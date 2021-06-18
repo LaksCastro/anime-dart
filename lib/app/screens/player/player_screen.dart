@@ -1,6 +1,7 @@
 import 'package:anime_dart/app/setup.dart';
 import 'package:anime_dart/app/store/player_store.dart';
-import 'package:flick_video_player/flick_video_player.dart';
+import 'package:flick_video_player/flick_video_player.dart'
+    hide FlickLandscapeControls, FlickPortraitControls;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,6 +71,137 @@ class _PlayerScreenState extends State<PlayerScreen> {
           },
         ),
       ),
+    );
+  }
+}
+
+class FlickLandscapeControls extends StatelessWidget {
+  const FlickLandscapeControls({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FlickPortraitControls(
+      fontSize: 14,
+      iconSize: 30,
+      progressBarSettings: FlickProgressBarSettings(
+        height: 5,
+      ),
+    );
+  }
+}
+
+/// Default portrait controls.
+class FlickPortraitControls extends StatelessWidget {
+  const FlickPortraitControls(
+      {Key key,
+      this.iconSize = 20,
+      this.fontSize = 12,
+      this.progressBarSettings})
+      : super(key: key);
+
+  /// Icon size.
+  ///
+  /// This size is used for all the player icons.
+  final double iconSize;
+
+  /// Font size.
+  ///
+  /// This size is used for all the text.
+  final double fontSize;
+
+  /// [FlickProgressBarSettings] settings.
+  final FlickProgressBarSettings progressBarSettings;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Positioned.fill(
+          child: FlickShowControlsAction(
+            child: FlickSeekVideoAction(
+              child: Center(
+                child: FlickVideoBuffer(
+                  child: FlickAutoHideChild(
+                    showIfVideoNotInitialized: false,
+                    child: ClipOval(
+                      child: Container(
+                        color: Colors.grey.withOpacity(.5),
+                        child: FlickPlayToggle(
+                          size: 30,
+                          color: Colors.black,
+                          padding: EdgeInsets.all(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Positioned.fill(
+          child: FlickAutoHideChild(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                padding: const EdgeInsets.all(10.0),
+                height: 75,
+                color: Colors.black.withOpacity(.8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                      child: FlickVideoProgressBar(
+                        flickProgressBarSettings: progressBarSettings,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        FlickPlayToggle(
+                          size: iconSize,
+                        ),
+                        SizedBox(
+                          width: iconSize / 2,
+                        ),
+                        FlickSoundToggle(
+                          size: iconSize,
+                        ),
+                        SizedBox(
+                          width: iconSize / 2,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            FlickCurrentPosition(
+                              fontSize: fontSize,
+                            ),
+                            FlickAutoHideChild(
+                              child: Text(
+                                ' / ',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: fontSize),
+                              ),
+                            ),
+                            FlickTotalDuration(
+                              fontSize: fontSize,
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                        FlickFullScreenToggle(
+                          size: iconSize,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
