@@ -10,7 +10,7 @@ import 'package:anime_dart/app/core/favorites/domain/repositories/favorite_repos
 import 'package:anime_dart/app/core/search/infra/models/anime_model.dart';
 
 class AnimeTvBrowsingDataSource implements BrowsingDataSource {
-  final _baseUrl = "https://appanimeplus.tk/api-animesbr-10.php";
+  final _baseUrl = "https://appanimeplus.tk/meuanimetv-40.php";
   final _imageBaseUrl = "https://cdn.appanimeplus.tk/img/";
   final _httpHeaders = {
     "User-Agent":

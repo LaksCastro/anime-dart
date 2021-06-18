@@ -1,6 +1,5 @@
 import 'package:anime_dart/app/screens/config/widgets/section_label.dart';
 import 'package:anime_dart/app/screens/config/widgets/section_tile.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,10 +39,10 @@ class _DataManagerSectionState extends State<DataManagerSection> {
   }
 
   void _exportWatchedData() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-    );
+    // final result = await FilePicker.platform.pickFiles(
+    //   type: FileType.image,
+    // );
 
-    print(result);
+    // print(result);
   }
 }
