@@ -1,4 +1,4 @@
-name: anime_dart
+name: flitch
 description: Anime Dart, Web Scrapper and API Client to allow streaming animes
 
 publish_to: "none"
@@ -6,42 +6,35 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.9.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  flutter_modular: ^2.0.1
-  flutter_i18n: ^0.20.1
-  outline_material_icons: ^0.1.1
-  sqflite: ^1.3.2+2
-  path: ^1.7.0
-  country_pickers: ^1.3.0
-  get_it: ^5.0.6
-  path_provider: ^1.6.27
-  shared_preferences: ^0.5.12+4
-  equatable: ^1.2.5
-  vector_math: ^2.0.8
-  dartz: ^0.9.2
-  dio: ^3.0.10
-  diacritic: ^0.1.1
-  flutter_dotenv: ^3.1.0
-
-  # Local deps
-  app_core:
-    git: https://github.com/AnimeDart/dart-core
+  flutter_modular:
+  flutter_i18n:
+  outline_material_icons:
+  sqflite:
+  path:
+  country_pickers:
+  get_it:
+  path_provider:
+  shared_preferences:
+  equatable:
+  vector_math:
+  dartz:
+  dio:
+  diacritic:
+  flutter_dotenv:
 
   # Flutter deps
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.0
+  cupertino_icons:
 
 dev_dependencies:
-  effective_dart: ^1.3.0
-  test: ^1.15.7
-  dotenv: ^2.0.0
-
-  # Local deps
-  commit_formatter:
-    git: https://github.com/AnimeDart/commit-formatter
+  effective_dart:
+  test:
+  dotenv:
+  process_run:
 
   # Flutter deps
   flutter_test:

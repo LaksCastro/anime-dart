@@ -1,4 +1,0 @@
-enum AppLanguage {
-  interface,
-  sources,
-}
