@@ -48,7 +48,10 @@
 
 ## Files
 
-### - [Latest Release, Download Link](https://github.com/AnimeFlitch/flitch/releases/download/untagged-b1f1d596139c72a2f14b/app-release.apk)
+- ### [Latest Release, Download Link](https://github.com/AnimeFlitch/flitch/releases/download/untagged-b1f1d596139c72a2f14b/app-release.apk)
+
+<br>
+<br>
 
 ## Printscreens - Dark Mode
 
