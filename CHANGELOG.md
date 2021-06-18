@@ -1,5 +1,10 @@
 # Changelog
 
+### v1.0.1 - 18-06-2021
+
+- Update to new API URL
+- Fix player brightness
+
 ### v1.0.2
 - The player UI has been updated for a better experience
    - Possibility to advance 5s by double clicking on the right side of the player
