@@ -32,7 +32,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
               SizedBox(height: 20),
               ThemeSection(),
               SizedBox(height: 20),
-              DataManagerSection(),
+              // DataManagerSection(),
               SizedBox(height: 30),
               InDevelopment(),
               SizedBox(height: 20),
