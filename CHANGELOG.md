@@ -1,5 +1,14 @@
 # Changelog
 
+### v1.0.4 - 21-06-2021
+
+- Implement API auth
+  - AnimeTV API has changed since last release: now an authentication is required to get anime streaming URL's. So, this is a breaking change, but now is fixed, [as described here.](https://github.com/LaksCastro/anime-tv-unofficial-api#nota-importante)
+- All in-one: remove episode screen [as discussed here](https://github.com/AnimeFlitch/flitch/issues/5), thanks  @RickyM7.
+- Move search button to AppBar (remove floating action button)
+
+Also, sorry for any trouble, API is not mine, so is hard to prevent breaking changes like these, I hope you unsderstand, thank you =)
+
 ### v1.0.1 - 18-06-2021
 
 - Update to new API URL
