@@ -17,7 +17,7 @@ class WaifuWidget extends StatelessWidget {
       child: Container(
         alignment: Alignment.centerLeft,
         child: Image.asset(
-          "assets/waifu.png",
+          'assets/waifu.png',
           height: height,
         ),
       ),

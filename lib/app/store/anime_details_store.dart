@@ -159,14 +159,16 @@ abstract class _AnimeDetailsStoreBase with Store {
     final aux = episodesOfAnimeDetails[index];
 
     episodesOfAnimeDetails[index] = EpisodeDetails(
-        animeId: aux.animeId,
-        id: aux.id,
-        imageHttpHeaders: aux.imageHttpHeaders,
-        imageUrl: aux.imageUrl,
-        label: aux.label,
-        stats: newStats,
-        url: aux.url,
-        urlHd: aux.urlHd);
+      animeId: aux.animeId,
+      id: aux.id,
+      imageHttpHeaders: aux.imageHttpHeaders,
+      imageUrl: aux.imageUrl,
+      label: aux.label,
+      stats: newStats,
+      url: aux.url,
+      urlHd: aux.urlHd,
+      urlFullHd: aux.urlFullHd,
+    );
 
     if (filteredIndex != null && filteredIndex != -1) {
       filteredEpisodes[filteredIndex] = episodesOfAnimeDetails[index];

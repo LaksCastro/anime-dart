@@ -150,9 +150,10 @@
 <br>
 
 ## Arquivos de instalação para Android
+
 Nesta release estou optando por oferecer o fat apk (arquivo com os binários das 3 arquiteturas do Android), portanto, basta scanear o QRCode abaixo e instalar, sem se preocupar com a arquitetura.
 
- ([Flutter Docs](https://flutter.dev/docs/deployment/android#what-is-a-fat-apk)).
+([Flutter Docs](https://flutter.dev/docs/deployment/android#what-is-a-fat-apk)).
 
 <br>
 <br>
@@ -205,5 +206,5 @@ flutter build apk --split-per-abi
 </p>
 <p align="center">Anime Dart <a href="https://github.com/LaksCastro/anime-dart/blob/master/LICENSE.md">is MIT licensed 💖</a></p>
 <p align="center">
-  <img src="./assets/words_launcher-m.png" height="100" />
+  <img src="./assets/logosmall.png" height="100" />
 </p>

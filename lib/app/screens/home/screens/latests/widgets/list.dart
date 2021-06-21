@@ -1,5 +1,5 @@
 import 'package:anime_dart/app/screens/anime_details/anime_details_screen.dart';
-import 'package:anime_dart/app/screens/watch_episode/watch_episode_screen.dart';
+import 'package:anime_dart/app/screens/watch_modal/watch_modal_screen.dart';
 import 'package:anime_dart/app/setup.dart';
 import 'package:anime_dart/app/store/central_store.dart';
 import 'package:anime_dart/app/store/home_store.dart';
@@ -7,14 +7,14 @@ import 'package:anime_dart/app/widgets/resource_tile/resource_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class LatestsList extends StatefulWidget {
-  LatestsList({Key key}) : super(key: key);
+class LatestEpisodes extends StatefulWidget {
+  const LatestEpisodes({Key key}) : super(key: key);
 
   @override
-  _LatestsListState createState() => _LatestsListState();
+  _LatestEpisodesState createState() => _LatestEpisodesState();
 }
 
-class _LatestsListState extends State<LatestsList> {
+class _LatestEpisodesState extends State<LatestEpisodes> {
   final homeStore = getIt<HomeStore>();
   final centralStore = getIt<CentralStore>();
 
@@ -34,13 +34,15 @@ class _LatestsListState extends State<LatestsList> {
             itemBuilder: (BuildContext context, int index) {
               final episode = homeStore.latests[index];
 
+              final heroTag = '${episode.imageUrl}${episode.animeId}$index';
+
               void onTap() {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => WatchEpisodeScreen(
-                      id: episode.id,
-                    ),
+                showDialog(
+                  context: context,
+                  builder: (_) => WatchModalScreen(
+                    id: episode.id,
+                    allEpisodes: [],
+                    title: episode.label,
                   ),
                 );
               }
@@ -54,10 +56,15 @@ class _LatestsListState extends State<LatestsList> {
 
               void onLongPress() {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) =>
-                            AnimeDetailsScreen(animeId: episode.animeId)));
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => AnimeDetailsScreen(
+                      animeId: episode.animeId,
+                      imageUrl: episode.imageUrl,
+                      heroTag: heroTag,
+                    ),
+                  ),
+                );
               }
 
               return ResourceTile(
@@ -66,12 +73,13 @@ class _LatestsListState extends State<LatestsList> {
                 onTopRightIconTap: onTapBookMark,
                 onLongPress: onLongPress,
                 title: episode.label,
-                cardLabel: "FAVORITOS",
+                cardLabel: 'LANÇAMENTOS',
                 topRightIcon: ResourceTile.bookMarkIcon(
                   context,
                   episode.stats,
                 ),
                 onTap: onTap,
+                heroTag: heroTag,
               );
             },
           );

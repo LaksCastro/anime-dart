@@ -39,6 +39,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/waifu.png
+    - assets/logosmall.png
+
   fonts:
     - family: Raleway
       fonts:

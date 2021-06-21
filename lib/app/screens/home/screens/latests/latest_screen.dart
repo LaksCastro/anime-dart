@@ -54,14 +54,14 @@ class _LatestsScreenState extends State<LatestsScreen> {
                   FlatButton(
                     color: Theme.of(context).colorScheme.secondary,
                     onPressed: homeStore.loadLatests,
-                    child: Text("Tentar novamente"),
+                    child: Text('Tentar novamente'),
                   )
                 ],
               ),
             );
           }
 
-          return LatestsList();
+          return LatestEpisodes();
         },
       ),
     );

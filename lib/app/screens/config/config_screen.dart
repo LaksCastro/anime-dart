@@ -1,5 +1,4 @@
 import 'package:anime_dart/app/screens/config/providers/store_provider.dart';
-import 'package:anime_dart/app/screens/config/widgets/data_manager_section.dart';
 import 'package:anime_dart/app/screens/config/widgets/in_development.dart';
 import 'package:anime_dart/app/screens/config/widgets/theme_section.dart';
 import 'package:anime_dart/app/setup.dart';

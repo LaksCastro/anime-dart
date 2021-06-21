@@ -9,10 +9,7 @@ import 'package:anime_dart/app/core/watched/domain/repository/watched_repository
 class AnimeTvDetailsDataSource implements DetailsDataSource {
   final _baseUrl = "https://appanimeplus.tk/meuanimetv-40.php";
   final _imageBaseUrl = "https://cdn.appanimeplus.tk/img/";
-  final _httpHeaders = {
-    "User-Agent":
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36"
-  };
+
   final FavoritesRepository favorites;
   final WatchedRepository watched;
 
@@ -47,7 +44,7 @@ class AnimeTvDetailsDataSource implements DetailsDataSource {
         "title": data["category_name"],
         "synopsis": data["category_name"],
         "imageUrl": _getCompleteImageUrl(data["category_image"]),
-        "imageHttpHeaders": _httpHeaders,
+        "imageHttpHeaders": Utils.simpleHttpHeaders,
         "year": data["ano"],
         "genres": data["category_genres"].replaceAll(" ", "").split(","),
         "isFavorite": isFavorite
@@ -83,20 +80,23 @@ class AnimeTvDetailsDataSource implements DetailsDataSource {
         "label": data["title"],
         "url": data["location"],
         "urlHd": data["locationsd"],
+        "urlFullHd": data["locationhd"],
         "imageUrl": ownerAnime.imageUrl,
         "imageHttpHeaders": ownerAnime.imageHttpHeaders,
         "stats": stats
       };
 
       final result = EpisodeDetailsModel(
-          animeId: source["animeId"],
-          id: source["id"],
-          imageHttpHeaders: source["imageHttpHeaders"],
-          imageUrl: source["imageUrl"],
-          label: source["label"],
-          stats: source["stats"],
-          url: source["url"],
-          urlHd: source["urlHd"]);
+        animeId: source["animeId"],
+        id: source["id"],
+        imageHttpHeaders: source["imageHttpHeaders"],
+        imageUrl: source["imageUrl"],
+        label: source["label"],
+        stats: source["stats"],
+        url: source["url"],
+        urlHd: source["urlHd"],
+        urlFullHd: source["urlFullHd"],
+      );
 
       return result;
     } catch (e) {

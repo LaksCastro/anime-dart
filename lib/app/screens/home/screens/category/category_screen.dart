@@ -1,7 +1,7 @@
 import 'package:anime_dart/app/screens/home/screens/category/widgets/list.dart';
 import 'package:anime_dart/app/widgets/waifu/waifu_widget.dart';
 import 'package:flutter/material.dart';
-import "package:anime_dart/app/screens/home/screens/category/categories_enum.dart";
+import 'package:anime_dart/app/screens/home/screens/category/categories_enum.dart';
 
 class CategoryScreen extends StatefulWidget {
   CategoryScreen({Key key}) : super(key: key);
@@ -28,8 +28,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
             context,
             MaterialPageRoute(
               builder: (_) => CategoryList(
-                label: categories[index]["label"],
-                query: categories[index]["query"],
+                label: categories[index]['label'],
+                query: categories[index]['query'],
               ),
             ),
           );
@@ -40,9 +40,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
           child: Container(
             color: Theme.of(context).cardColor,
             child: ListTile(
-              title: Text(categories[index]["label"]),
+              title: Text(categories[index]['label']),
               leading: Icon(
-                categories[index]["icon"],
+                categories[index]['icon'],
                 color: Theme.of(context)
                     .textTheme
                     .bodyText1

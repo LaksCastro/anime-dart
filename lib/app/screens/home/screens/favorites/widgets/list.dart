@@ -34,12 +34,16 @@ class _FavoritesListState extends State<FavoritesList> {
             itemBuilder: (BuildContext context, int index) {
               final anime = homeStore.favorites[index];
 
+              final heroTag = '${anime.imageUrl}${anime.id}$index';
+
               void onTap() {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => AnimeDetailsScreen(
                       animeId: anime.id,
+                      imageUrl: anime.imageUrl,
+                      heroTag: heroTag,
                     ),
                   ),
                 );
@@ -69,6 +73,7 @@ class _FavoritesListState extends State<FavoritesList> {
                   anime.isFavorite,
                 ),
                 onTap: onTap,
+                heroTag: heroTag,
               );
             },
           );

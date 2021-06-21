@@ -58,12 +58,16 @@ class _RandomListState extends State<RandomList> {
             itemBuilder: (BuildContext context, int index) {
               final anime = homeStore.random[index];
 
+              final heroTag = '${anime.imageUrl}${anime.id}$index';
+
               void onTap() {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => AnimeDetailsScreen(
                       animeId: anime.id,
+                      heroTag: heroTag,
+                      imageUrl: anime.imageUrl,
                     ),
                   ),
                 );
@@ -71,13 +75,15 @@ class _RandomListState extends State<RandomList> {
 
               void onTapFavorite() {
                 centralStore.setEpisodeFavorite(
-                    Anime(
-                        id: anime.id,
-                        imageHttpHeaders: anime.imageHttpHeaders,
-                        imageUrl: anime.imageUrl,
-                        isFavorite: anime.isFavorite,
-                        title: anime.title),
-                    !anime.isFavorite);
+                  Anime(
+                    id: anime.id,
+                    imageHttpHeaders: anime.imageHttpHeaders,
+                    imageUrl: anime.imageUrl,
+                    isFavorite: anime.isFavorite,
+                    title: anime.title,
+                  ),
+                  !anime.isFavorite,
+                );
               }
 
               return ResourceTile(
@@ -91,6 +97,7 @@ class _RandomListState extends State<RandomList> {
                   anime.isFavorite,
                 ),
                 onTap: onTap,
+                heroTag: heroTag,
               );
             },
           );

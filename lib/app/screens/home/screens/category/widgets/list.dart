@@ -101,12 +101,16 @@ class _CategoryListState extends State<CategoryList> {
               itemBuilder: (BuildContext context, int index) {
                 final anime = localStore.results[index];
 
+                final heroTag = '${anime.imageUrl}${anime.id}$index';
+
                 void onTap() {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (_) => AnimeDetailsScreen(
                         animeId: anime.id,
+                        imageUrl: anime.imageUrl,
+                        heroTag: heroTag,
                       ),
                     ),
                   );
@@ -136,6 +140,7 @@ class _CategoryListState extends State<CategoryList> {
                     anime.isFavorite,
                   ),
                   onTap: onTap,
+                  heroTag: heroTag,
                 );
               },
             );
