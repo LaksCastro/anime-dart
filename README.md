@@ -40,7 +40,6 @@
 
 - [Printscreens - Dark Mode](#printscreens---dark-mode)
 - [Printscreens - Light Mode](#printscreens---light-mode)
-- [Download - QR Code](#arquivos-de-instalação-para-android)
 - [Como clonar este projeto](#como-clonar-este-projeto)
 
 <br>
@@ -48,7 +47,7 @@
 
 ## Files
 
-- ### [Latest Release, Download Link](https://github.com/AnimeFlitch/flitch/releases/download/1.0.3/app-release.apk)
+- ### [Latest Release, Download Link](https://github.com/AnimeFlitch/flitch/releases/download/v1.0.4/app-release.apk)
 
 <br>
 <br>
