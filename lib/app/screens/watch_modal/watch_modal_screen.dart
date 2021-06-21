@@ -58,7 +58,7 @@ class _WatchModalScreenState extends State<WatchModalScreen> {
       splashFactory: InkSplash.splashFactory,
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        padding: EdgeInsets.symmetric(vertical: 18, horizontal: 25),
         child: Row(
           children: [
             Icon(
