@@ -2,40 +2,50 @@ import 'package:anime_dart/app/setup.dart';
 import 'package:anime_dart/app/store/anime_details_store.dart';
 import 'package:anime_dart/app/store/central_store.dart';
 import 'package:anime_dart/app/store/theme_store.dart';
+import 'package:anime_dart/app/widgets/text_placeholder/text_placeholder.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AnimeDetailsHeader extends StatefulWidget {
   final String storeListenerKey;
-  AnimeDetailsHeader({Key key, this.storeListenerKey}) : super(key: key);
+  final String imageUrl;
+  final String heroTag;
+
+  const AnimeDetailsHeader({
+    Key key,
+    this.storeListenerKey,
+    this.imageUrl,
+    this.heroTag,
+  }) : super(key: key);
 
   @override
-  _AnimeDetailsHeaderState createState() =>
-      _AnimeDetailsHeaderState(storeListenerKey: storeListenerKey);
+  _AnimeDetailsHeaderState createState() => _AnimeDetailsHeaderState();
 }
 
 class _AnimeDetailsHeaderState extends State<AnimeDetailsHeader> {
-  final String storeListenerKey;
+  String get _storeListenerKey => widget.storeListenerKey;
   final _centralStore = getIt<CentralStore>();
   final _themeStore = getIt<ThemeStore>();
 
   AnimeDetailsStore localStore;
 
-  _AnimeDetailsHeaderState({@required this.storeListenerKey});
-
   @override
   void initState() {
     super.initState();
 
-    localStore = _centralStore.getAnimeDetailsListener(storeListenerKey);
+    localStore = _centralStore.getAnimeDetailsListener(_storeListenerKey);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(color: Theme.of(context).cardColor),
+      alignment: Alignment.centerLeft,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,21 +54,25 @@ class _AnimeDetailsHeaderState extends State<AnimeDetailsHeader> {
                 margin: EdgeInsets.only(top: 20, left: 20),
                 width: 140,
                 height: 200,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    httpHeaders: localStore.animeDetails.imageHttpHeaders,
-                    imageUrl: localStore.animeDetails.imageUrl,
-                    placeholder: (context, url) => Container(
-                      width: 140,
-                      height: 200,
-                      color: Colors.purple.withOpacity(.10),
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                      width: 140,
-                      height: 200,
-                      color: Colors.black.withOpacity(.60),
+                child: Hero(
+                  tag: widget.heroTag,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      httpHeaders: localStore.animeDetails?.imageHttpHeaders,
+                      imageUrl:
+                          widget.imageUrl ?? localStore.animeDetails?.imageUrl,
+                      placeholder: (context, url) => Container(
+                        width: 140,
+                        height: 200,
+                        color: Colors.purple.withOpacity(.10),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        width: 140,
+                        height: 200,
+                        color: Colors.black.withOpacity(.60),
+                      ),
                     ),
                   ),
                 ),
@@ -84,13 +98,15 @@ class _AnimeDetailsHeaderState extends State<AnimeDetailsHeader> {
                               color: Theme.of(context).colorScheme.secondary,
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            child: Text(
-                              localStore.animeDetails.year,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                              ),
-                            ),
+                            child: localStore.animeDetails?.year != null
+                                ? Text(
+                                    localStore.animeDetails.year,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                    ),
+                                  )
+                                : TextPlaceholder(),
                           ),
                           Observer(
                             builder: (context) {
@@ -122,44 +138,21 @@ class _AnimeDetailsHeaderState extends State<AnimeDetailsHeader> {
                                   left: 10,
                                   right: 10,
                                 ),
-                                child: Text(
-                                  localStore.animeDetails.title,
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .subtitle1
-                                        .fontSize,
-                                  ),
-                                ),
+                                child: localStore.animeDetails?.title != null
+                                    ? Text(
+                                        localStore.animeDetails.title,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1
+                                              .fontSize,
+                                        ),
+                                      )
+                                    : TextPlaceholder(),
                               );
                             },
                           ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      child: Wrap(
-                        children: [
-                          for (final genre in localStore.animeDetails.genres)
-                            Container(
-                              margin: EdgeInsets.only(right: 5, bottom: 5),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.secondary,
-                                borderRadius: BorderRadius.circular(
-                                  5,
-                                ),
-                              ),
-                              padding: EdgeInsets.all(5),
-                              child: Text(
-                                genre,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            )
                         ],
                       ),
                     ),
@@ -169,10 +162,40 @@ class _AnimeDetailsHeaderState extends State<AnimeDetailsHeader> {
             ],
           ),
           Container(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20)
+                .copyWith(bottom: 0),
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.start,
+              runAlignment: WrapAlignment.start,
+              runSpacing: 0,
+              alignment: WrapAlignment.start,
+              children: [
+                for (final genre in localStore.animeDetails?.genres ?? [])
+                  Container(
+                    margin: EdgeInsets.only(right: 5, bottom: 5),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    padding: EdgeInsets.all(5),
+                    child: Text(
+                      genre,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  )
+              ],
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.symmetric(horizontal: 20)
+                .copyWith(top: 0, bottom: 20),
             child: Text(
-              localStore.animeDetails.synopsis,
+              localStore.animeDetails?.synopsis ?? '',
               style: TextStyle(height: 2),
             ),
           ),

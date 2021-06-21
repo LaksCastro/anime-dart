@@ -13,15 +13,18 @@ import 'package:outline_material_icons/outline_material_icons.dart';
 
 class AnimeDetailsScreen extends StatefulWidget {
   final String animeId;
-  AnimeDetailsScreen({this.animeId});
+  final String imageUrl;
+  final String heroTag;
+
+  const AnimeDetailsScreen({this.animeId, this.imageUrl, this.heroTag});
 
   @override
-  _AnimeDetailsScreenState createState() =>
-      _AnimeDetailsScreenState(animeId: animeId);
+  _AnimeDetailsScreenState createState() => _AnimeDetailsScreenState();
 }
 
 class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
-  String animeId;
+  String get _animeId => widget.animeId;
+
   String storeListenerKey;
   AnimeDetailsStore localStore = AnimeDetailsStore();
   final centralStore = getIt<CentralStore>();
@@ -29,7 +32,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
   final searchQuery = TextEditingController();
   Timer debounce;
 
-  _AnimeDetailsScreenState({@required this.animeId});
+  bool get _hasImage => widget.imageUrl != null;
 
   void _onSearchChanged() {
     if (debounce?.isActive ?? false) {
@@ -68,7 +71,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
 
     storeListenerKey = centralStore.addAnimeDetailsListener(localStore);
 
-    localStore.loadAnimeDetails(animeId);
+    localStore.loadAnimeDetails(_animeId);
 
     searchQuery.addListener(_onSearchChanged);
   }
@@ -89,11 +92,11 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
         title: Observer(
           builder: (_) {
             if (localStore.loading) {
-              return Text("Carregando...");
+              return Text('Carregando...');
             }
 
             if (localStore.error != null) {
-              return Text("Oooops...");
+              return Text('Oooops...');
             }
 
             if (localStore.showSearch) {
@@ -153,7 +156,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
       ),
       body: Observer(
         builder: (_) {
-          if (localStore.loading) {
+          if (localStore.loading && !_hasImage) {
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -164,7 +167,7 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
               alignment: Alignment.center,
               padding: EdgeInsets.all(30),
               child: Text(
-                "Ocorreu um erro ao carregar os episódios deste anime, tente novamente!",
+                'Ocorreu um erro ao carregar os episódios deste anime, tente novamente!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   height: 1.5,
@@ -175,15 +178,22 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
 
           if (!localStore.searchMode && !localStore.showSearch) {
             return AnimeDetailsListWithHeader(
-                storeListenerKey: storeListenerKey);
+              storeListenerKey: storeListenerKey,
+              imageUrl: widget.imageUrl,
+              heroTag: widget.heroTag,
+            );
           }
 
           if (localStore.searchMode) {
             if (localStore.notFoundInternalSearch) {
               return WillPopScope(
-                child: Center(
-                  child: Text(
-                    "Não foi posível encontrar o episódio especificado",
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Center(
+                    child: Text(
+                      'Não foi posível encontrar o episódio especificado',
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
                 onWillPop: _preventAcidentalPop,
@@ -212,13 +222,15 @@ class _AnimeDetailsScreenState extends State<AnimeDetailsScreen> {
           final aux = localStore.animeDetails;
 
           centralStore.setEpisodeFavorite(
-              Anime(
-                  id: aux.id,
-                  imageHttpHeaders: aux.imageHttpHeaders,
-                  imageUrl: aux.imageUrl,
-                  isFavorite: aux.isFavorite,
-                  title: aux.title),
-              !localStore.animeDetails.isFavorite);
+            Anime(
+              id: aux.id,
+              imageHttpHeaders: aux.imageHttpHeaders,
+              imageUrl: aux.imageUrl,
+              isFavorite: aux.isFavorite,
+              title: aux.title,
+            ),
+            !localStore.animeDetails.isFavorite,
+          );
         },
         child: Observer(
           builder: (_) {

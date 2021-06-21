@@ -10,6 +10,7 @@ class EpisodeDetailsModel extends EpisodeDetails {
   final String label;
   final String url;
   final String urlHd;
+  final String urlFullHd;
   final String imageUrl;
   final Map<String, String> imageHttpHeaders;
   final double stats;
@@ -20,6 +21,7 @@ class EpisodeDetailsModel extends EpisodeDetails {
     this.label,
     this.url,
     this.urlHd,
+    this.urlFullHd,
     this.imageUrl,
     this.imageHttpHeaders,
     this.stats,
@@ -31,6 +33,7 @@ class EpisodeDetailsModel extends EpisodeDetails {
     String label,
     String url,
     String urlHd,
+    String urlFullHd,
     String imageUrl,
     Map<String, String> imageHttpHeaders,
     double stats,
@@ -41,6 +44,7 @@ class EpisodeDetailsModel extends EpisodeDetails {
       label: label ?? this.label,
       url: url ?? this.url,
       urlHd: urlHd ?? this.urlHd,
+      urlFullHd: urlFullHd ?? this.urlFullHd,
       imageUrl: imageUrl ?? this.imageUrl,
       imageHttpHeaders: imageHttpHeaders ?? this.imageHttpHeaders,
       stats: stats ?? this.stats,
@@ -54,6 +58,7 @@ class EpisodeDetailsModel extends EpisodeDetails {
       'label': label,
       'url': url,
       'urlHd': urlHd,
+      'urlFullHd': urlFullHd,
       'imageUrl': imageUrl,
       'imageHttpHeaders': imageHttpHeaders,
       'stats': stats,
@@ -61,14 +66,13 @@ class EpisodeDetailsModel extends EpisodeDetails {
   }
 
   factory EpisodeDetailsModel.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
     return EpisodeDetailsModel(
       id: map['id'],
       animeId: map['animeId'],
       label: map['label'],
       url: map['url'],
       urlHd: map['urlHd'],
+      urlFullHd: map['urlFullHd'],
       imageUrl: map['imageUrl'],
       imageHttpHeaders: Map<String, String>.from(map['imageHttpHeaders']),
       stats: map['stats'],
@@ -82,22 +86,23 @@ class EpisodeDetailsModel extends EpisodeDetails {
 
   @override
   String toString() {
-    return 'EpisodeDetailsModel(id: $id, animeId: $animeId, label: $label, url: $url, urlHd: $urlHd, imageUrl: $imageUrl, imageHttpHeaders: $imageHttpHeaders, stats: $stats)';
+    return 'EpisodeDetailsModel(id: $id, animeId: $animeId, label: $label, url: $url, urlHd: $urlHd, urlFullHd: $urlFullHd, imageUrl: $imageUrl, imageHttpHeaders: $imageHttpHeaders, stats: $stats)';
   }
 
   @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
 
-    return o is EpisodeDetailsModel &&
-        o.id == id &&
-        o.animeId == animeId &&
-        o.label == label &&
-        o.url == url &&
-        o.urlHd == urlHd &&
-        o.imageUrl == imageUrl &&
-        mapEquals(o.imageHttpHeaders, imageHttpHeaders) &&
-        o.stats == stats;
+    return other is EpisodeDetailsModel &&
+        other.id == id &&
+        other.animeId == animeId &&
+        other.label == label &&
+        other.url == url &&
+        other.urlHd == urlHd &&
+        other.urlFullHd == urlFullHd &&
+        other.imageUrl == imageUrl &&
+        mapEquals(other.imageHttpHeaders, imageHttpHeaders) &&
+        other.stats == stats;
   }
 
   @override
@@ -107,6 +112,7 @@ class EpisodeDetailsModel extends EpisodeDetails {
         label.hashCode ^
         url.hashCode ^
         urlHd.hashCode ^
+        urlFullHd.hashCode ^
         imageUrl.hashCode ^
         imageHttpHeaders.hashCode ^
         stats.hashCode;

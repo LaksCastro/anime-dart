@@ -10,15 +10,12 @@ import 'package:anime_dart/app/core/favorites/domain/repositories/favorite_repos
 import 'package:anime_dart/app/core/search/infra/models/anime_model.dart';
 
 class AnimeTvBrowsingDataSource implements BrowsingDataSource {
-  final _baseUrl = "https://appanimeplus.tk/meuanimetv-40.php";
-  final _imageBaseUrl = "https://cdn.appanimeplus.tk/img/";
-  final _httpHeaders = {
-    "User-Agent":
-        "Mozilla/5.0 (Linux; Android 5.1.1; SM-G928X Build/LMY47X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.83 Mobile Safari/537.36",
-  };
+  final _baseUrl = 'https://appanimeplus.tk/meuanimetv-40.php';
+  final _imageBaseUrl = 'https://cdn.appanimeplus.tk/img/';
+
   final dio = Utils.dio;
 
-  final _watchedListKey = "anime__dart__application__watched__episodes";
+  final _watchedListKey = 'anime__dart__application__watched__episodes';
 
   final _minAnimeId = 3;
   final _maxAnimeId = 2715;
@@ -33,11 +30,11 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
 
   Future<EpisodeModel> _getEpisodeFromId(String id) async {
     try {
-      final response = await dio.get(_baseUrl + "?episodios=$id");
+      final response = await dio.get(_baseUrl + '?episodios=$id');
 
       final data = response.data[0];
 
-      final anime = await _getAnimeFromId(data["category_id"]);
+      final anime = await _getAnimeFromId(data['category_id']);
 
       double stats = 0;
 
@@ -47,12 +44,12 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
       } catch (e) {}
 
       Map<String, dynamic> source = {
-        "id": data["id"],
-        "animeId": anime.id,
-        "label": data["title"],
-        "imageUrl": anime.imageUrl,
-        "imageHttpHeaders": anime.imageHttpHeaders,
-        "stats": stats
+        'id': data['id'],
+        'animeId': anime.id,
+        'label': data['title'],
+        'imageUrl': anime.imageUrl,
+        'imageHttpHeaders': anime.imageHttpHeaders,
+        'stats': stats
       };
 
       final result = EpisodeModel.fromMap(source);
@@ -73,7 +70,7 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
 
   Future<AnimeModel> _getAnimeFromId(String id) async {
     try {
-      final response = await dio.get(_baseUrl + "?info=$id");
+      final response = await dio.get(_baseUrl + '?info=$id');
 
       final data = response.data[0];
 
@@ -86,11 +83,11 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
       } catch (e) {}
 
       Map<String, dynamic> source = {
-        "id": data["id"],
-        "title": data["category_name"],
-        "imageUrl": _getCompleteImageUrl(data["category_image"]),
-        "imageHttpHeaders": _httpHeaders,
-        "isFavorite": isFavorite
+        'id': data['id'],
+        'title': data['category_name'],
+        'imageUrl': _getCompleteImageUrl(data['category_image']),
+        'imageHttpHeaders': Utils.simpleHttpHeaders,
+        'isFavorite': isFavorite
       };
 
       final result = AnimeModel.fromMap(source);
@@ -126,14 +123,14 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
 
       return right;
     } catch (e) {
-      throw UnableToFetchDataException("A internal server error");
+      throw UnableToFetchDataException('A internal server error');
     }
   }
 
   @override
   Future<List<EpisodeModel>> getLatestEpisodes() async {
     try {
-      final response = await dio.get(_baseUrl + "?latest");
+      final response = await dio.get(_baseUrl + '?latest');
 
       final data = response.data;
 
@@ -143,17 +140,17 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
         double stats = 0;
 
         try {
-          final res = await watched.getEpisodeWatchedStats(result["video_id"]);
+          final res = await watched.getEpisodeWatchedStats(result['video_id']);
           res.fold((l) => throw l, (r) => stats = r);
         } catch (e) {}
 
         Map<String, dynamic> source = {
-          "id": result["video_id"],
-          "animeId": result["category_id"],
-          "label": result["title"],
-          "imageUrl": _getCompleteImageUrl(result["category_image"]),
-          "imageHttpHeaders": _httpHeaders,
-          "stats": stats
+          'id': result['video_id'],
+          'animeId': result['category_id'],
+          'label': result['title'],
+          'imageUrl': _getCompleteImageUrl(result['category_image']),
+          'imageHttpHeaders': Utils.simpleHttpHeaders,
+          'stats': stats
         };
 
         results.add(EpisodeModel.fromMap(source));
@@ -161,7 +158,7 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
 
       return results;
     } catch (e) {
-      throw UnableToFetchDataException("A internal server error");
+      throw UnableToFetchDataException('A internal server error');
     }
   }
 
@@ -173,7 +170,7 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
   @override
   Future<List<AnimeModel>> getTrendingAnimes() async {
     try {
-      final response = await dio.get(_baseUrl + "?populares");
+      final response = await dio.get(_baseUrl + '?populares');
 
       final data = response.data;
 
@@ -183,17 +180,17 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
         bool isFavorite = false;
 
         try {
-          final req = await favorites.isFavorite(result["id"]);
+          final req = await favorites.isFavorite(result['id']);
 
           req.fold((l) => throw l, (r) => isFavorite = r);
         } catch (e) {}
 
         Map<String, dynamic> source = {
-          "id": result["id"],
-          "title": result["category_name"],
-          "imageUrl": _getCompleteImageUrl(result["category_image"]),
-          "imageHttpHeaders": _httpHeaders,
-          "isFavorite": isFavorite
+          'id': result['id'],
+          'title': result['category_name'],
+          'imageUrl': _getCompleteImageUrl(result['category_image']),
+          'imageHttpHeaders': Utils.simpleHttpHeaders,
+          'isFavorite': isFavorite
         };
 
         results.add(AnimeModel.fromMap(source));
@@ -201,7 +198,7 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
 
       return results;
     } catch (e) {
-      throw UnableToFetchDataException("A internal server error");
+      throw UnableToFetchDataException('A internal server error');
     }
   }
 
@@ -224,14 +221,14 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
 
       return watched;
     } catch (e) {
-      throw UnableToFetchDataException("A internal server error");
+      throw UnableToFetchDataException('A internal server error');
     }
   }
 
   @override
   Future<List<Anime>> getByCategory(String category) async {
     try {
-      final endpoint = "$_baseUrl?categoria=$category";
+      final endpoint = '$_baseUrl?categoria=$category';
 
       final response = await dio.get(endpoint);
 
@@ -243,22 +240,22 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
         bool isFavorite = false;
 
         try {
-          final req = await favorites.isFavorite(item["id"]);
+          final req = await favorites.isFavorite(item['id']);
 
           req.fold((l) => throw l, (r) => isFavorite = r);
         } catch (e) {}
 
         animes.add(Anime(
-            id: item["id"],
-            title: item["category_name"],
-            imageUrl: _getCompleteImageUrl(item["category_image"]),
-            imageHttpHeaders: _httpHeaders,
+            id: item['id'],
+            title: item['category_name'],
+            imageUrl: _getCompleteImageUrl(item['category_image']),
+            imageHttpHeaders: Utils.simpleHttpHeaders,
             isFavorite: isFavorite));
       }
 
       return animes;
     } catch (e) {
-      throw UnableToFetchDataException("A internal server error");
+      throw UnableToFetchDataException('A internal server error');
     }
   }
 }

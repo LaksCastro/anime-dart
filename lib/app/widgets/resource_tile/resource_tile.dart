@@ -14,6 +14,7 @@ class ResourceTile extends StatelessWidget {
   final Widget topRightIcon;
   final String cardLabel;
   final String title;
+  final String heroTag;
 
   static Widget favoriteIcon(BuildContext context, bool isFavorite) {
     return Icon(
@@ -47,6 +48,7 @@ class ResourceTile extends StatelessWidget {
     this.topRightIcon,
     this.cardLabel,
     this.title,
+    this.heroTag,
   }) : super(key: key);
 
   @override
@@ -75,24 +77,27 @@ class ResourceTile extends StatelessWidget {
   }
 
   Widget _buildResourceImage() {
-    return Container(
-      width: imageWidth,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(5),
-        child: AspectRatio(
-          aspectRatio: imageAspectRatio,
-          child: CachedNetworkImage(
-            fit: BoxFit.cover,
-            httpHeaders: imageHttpHeaders,
-            imageUrl: imageUrl,
-            width: imageWidth,
-            placeholder: (context, url) => _buildImagePlaceholder(
-              context,
-              error: false,
-            ),
-            errorWidget: (context, url, error) => _buildImagePlaceholder(
-              context,
-              error: true,
+    return Hero(
+      tag: heroTag,
+      child: Container(
+        width: imageWidth,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(5),
+          child: AspectRatio(
+            aspectRatio: imageAspectRatio,
+            child: CachedNetworkImage(
+              fit: BoxFit.cover,
+              httpHeaders: imageHttpHeaders,
+              imageUrl: imageUrl,
+              width: imageWidth,
+              placeholder: (context, url) => _buildImagePlaceholder(
+                context,
+                error: false,
+              ),
+              errorWidget: (context, url, error) => _buildImagePlaceholder(
+                context,
+                error: true,
+              ),
             ),
           ),
         ),

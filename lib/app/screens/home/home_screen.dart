@@ -3,6 +3,9 @@ import 'package:anime_dart/app/screens/config/config_screen.dart';
 import 'package:anime_dart/app/screens/search/search_screen.dart';
 import 'package:anime_dart/app/setup.dart';
 import 'package:anime_dart/app/store/home_store.dart';
+import 'package:anime_dart/app/widgets/app_bottom_bar/app_bottom_bar.dart';
+import 'package:anime_dart/app/widgets/word_logo/word_logo.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
@@ -19,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     await showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return AlertDialog(
           title: Text("Tem certeza que deseja sair?"),
           content: Text(
@@ -73,33 +76,41 @@ class _HomeScreenState extends State<HomeScreen> {
         length: MainTabs.tabs.length,
         child: Scaffold(
           appBar: AppBar(
-            title: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Anime Dart",
-                  style: TextStyle(
-                    color: Theme.of(context)
-                        .primaryTextTheme
-                        .bodyText1
-                        .color
-                        .withOpacity(.60),
+            title: WordLogo(),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SearchScreen(),
+                    ),
+                  );
+                },
+                icon: Center(
+                  child: Container(
+                    child: Icon(
+                      Icons.search_rounded,
+                      color: Theme.of(context)
+                          .primaryTextTheme
+                          .bodyText1
+                          .color
+                          .withOpacity(.3),
+                    ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ConfigScreen(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    height: 100,
-                    width: 100,
+              ),
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ConfigScreen(),
+                    ),
+                  );
+                },
+                icon: Container(
+                  child: Center(
                     child: Icon(
                       OMIcons.settings,
                       color: Theme.of(context)
@@ -109,9 +120,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           .withOpacity(.3),
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              ),
+            ],
             automaticallyImplyLeading: false,
             bottom: TabBar(
               indicatorColor: Colors.white,
@@ -129,19 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
           body: TabBarView(
             children: [for (final tab in MainTabs.tabs) tab.builder(context)],
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => SearchScreen(),
-                ),
-              );
-            },
-            child: Icon(
-              Icons.search,
-            ),
-          ),
+          // bottomNavigationBar: AppBottomBar(),
         ),
       ),
       onWillPop: preventAcidentalExit,

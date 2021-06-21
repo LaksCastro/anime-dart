@@ -8,62 +8,79 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AnimeDetailsListWithHeader extends StatefulWidget {
   final String storeListenerKey;
+  final String imageUrl;
+  final String heroTag;
 
-  AnimeDetailsListWithHeader({Key key, this.storeListenerKey})
-      : super(key: key);
+  const AnimeDetailsListWithHeader({
+    Key key,
+    this.storeListenerKey,
+    this.imageUrl,
+    this.heroTag,
+  }) : super(key: key);
 
   @override
   _AnimeDetailsListWithHeaderState createState() =>
-      _AnimeDetailsListWithHeaderState(storeListenerKey: storeListenerKey);
+      _AnimeDetailsListWithHeaderState();
 }
 
 class _AnimeDetailsListWithHeaderState
     extends State<AnimeDetailsListWithHeader> {
   final centralStore = getIt<CentralStore>();
-  String storeListenerKey;
-  AnimeDetailsStore localStore;
 
-  _AnimeDetailsListWithHeaderState({
-    @required this.storeListenerKey,
-  }) : assert(storeListenerKey != null);
+  String get _storeListenerKey => widget.storeListenerKey;
+  AnimeDetailsStore localStore;
 
   @override
   void initState() {
     super.initState();
 
-    localStore = centralStore.getAnimeDetailsListener(storeListenerKey);
+    localStore = centralStore.getAnimeDetailsListener(_storeListenerKey);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      return RefreshIndicator(
-        onRefresh: () =>
-            localStore.loadAnimeDetails(localStore.animeDetails.id),
-        child: ListView.separated(
-          padding: EdgeInsets.only(bottom: 85),
-          itemBuilder: (_, i) {
-            if (i == 0) {
-              return AnimeDetailsHeader(
-                storeListenerKey: storeListenerKey,
-              );
-            }
-
-            final episode = localStore.episodesOfAnimeDetails[i - 1];
-
-            return AnimeDetailsTile(
-              episode: episode,
-              allEpisodes: localStore.episodesOfAnimeDetails,
-              initialIndex: i - 1,
-            );
-          },
-          separatorBuilder: (_, i) => Divider(
-            color: Colors.transparent,
-            height: i == 0 ? 20 : 10,
+    return RefreshIndicator(
+      onRefresh: () => localStore.loadAnimeDetails(localStore.animeDetails.id),
+      child: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                AnimeDetailsHeader(
+                  storeListenerKey: _storeListenerKey,
+                  imageUrl: widget.imageUrl,
+                  heroTag: widget.heroTag,
+                ),
+              ],
+            ),
           ),
-          itemCount: localStore.episodesOfAnimeDetails.length + 1,
-        ),
-      );
-    });
+          SliverPadding(padding: EdgeInsets.only(bottom: 20)),
+          Observer(
+            builder: (_) => SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (_, i) {
+                  if (localStore?.episodesOfAnimeDetails != null) {
+                    final episode = localStore.episodesOfAnimeDetails[i];
+
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      child: AnimeDetailsTile(
+                        episode: episode,
+                        allEpisodes: localStore.episodesOfAnimeDetails,
+                        initialIndex: i,
+                      ),
+                    );
+                  }
+
+                  return Center(child: CircularProgressIndicator());
+                },
+                childCount: localStore.episodesOfAnimeDetails?.length ?? 1,
+              ),
+            ),
+          ),
+          SliverPadding(padding: EdgeInsets.only(bottom: 100)),
+        ],
+      ),
+    );
   }
 }

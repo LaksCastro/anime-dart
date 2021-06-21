@@ -8,10 +8,7 @@ import 'package:anime_dart/app/core/search/infra/models/anime_model.dart';
 class AnimeTvSearchDataSource implements SearchDataSource {
   final _baseUrl = "https://appanimeplus.tk/meuanimetv-40.php";
   final _imageBaseUrl = "https://cdn.appanimeplus.tk/img/";
-  final _httpHeaders = {
-    "User-Agent":
-        "Mozilla/5.0 (Linux; Android 5.1.1; SM-G928X Build/LMY47X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.83 Mobile Safari/537.36"
-  };
+
   final FavoritesRepository favorites;
 
   final dio = Utils.dio;
@@ -46,7 +43,7 @@ class AnimeTvSearchDataSource implements SearchDataSource {
           "id": result["id"],
           "title": result["category_name"],
           "imageUrl": _getCompleteImageUrl(result["category_image"]),
-          "imageHttpHeaders": _httpHeaders,
+          "imageHttpHeaders": Utils.simpleHttpHeaders,
           "isFavorite": isFavorite
         };
 
@@ -81,7 +78,7 @@ class AnimeTvSearchDataSource implements SearchDataSource {
           "id": result["id"],
           "title": result["category_name"],
           "imageUrl": _getCompleteImageUrl(result["category_image"]),
-          "imageHttpHeaders": _httpHeaders,
+          "imageHttpHeaders": Utils.simpleHttpHeaders,
           "isFavorite": isFavorite
         };
 

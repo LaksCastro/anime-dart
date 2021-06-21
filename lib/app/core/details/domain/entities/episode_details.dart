@@ -4,6 +4,7 @@ class EpisodeDetails {
   final String label;
   final String url;
   final String urlHd;
+  final String urlFullHd;
   final String imageUrl;
   final Map<String, String> imageHttpHeaders;
   final double stats;
@@ -14,6 +15,7 @@ class EpisodeDetails {
     this.label,
     this.url,
     this.urlHd,
+    this.urlFullHd,
     this.imageUrl,
     this.imageHttpHeaders,
     this.stats,

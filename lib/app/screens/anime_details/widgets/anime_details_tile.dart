@@ -1,10 +1,10 @@
-import 'package:anime_dart/app/screens/watch_episode/watch_episode_screen.dart';
+import 'package:anime_dart/app/screens/watch_modal/watch_modal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
 import 'package:anime_dart/app/core/details/domain/entities/episode_details.dart';
 
-class AnimeDetailsTile extends StatelessWidget {
+class AnimeDetailsTile extends StatefulWidget {
   final EpisodeDetails episode;
   final List<EpisodeDetails> allEpisodes;
   final int initialIndex;
@@ -17,19 +17,23 @@ class AnimeDetailsTile extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _AnimeDetailsTileState createState() => _AnimeDetailsTileState();
+}
+
+class _AnimeDetailsTileState extends State<AnimeDetailsTile> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => WatchEpisodeScreen(
-              id: episode.id,
-              back: true,
-              allEpisodes: allEpisodes,
-              initialIndex: initialIndex,
-            ),
-          ),
+      onTap: () async {
+        await showDialog<void>(
+          context: context,
+          builder: (_) {
+            return WatchModalScreen(
+              allEpisodes: widget.allEpisodes,
+              id: widget.episode.id,
+              title: widget.episode.label,
+            );
+          },
         );
       },
       child: Container(
@@ -41,7 +45,7 @@ class AnimeDetailsTile extends StatelessWidget {
               color: Color.lerp(
                 Colors.red,
                 Colors.green,
-                episode.stats / 100,
+                widget.episode.stats / 100,
               ),
             ),
           ),
@@ -49,7 +53,7 @@ class AnimeDetailsTile extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         child: ListTile(
           title: Text(
-            episode.label,
+            widget.episode.label,
             style: TextStyle(
               height: 1.5,
             ),
