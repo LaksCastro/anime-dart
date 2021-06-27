@@ -70,7 +70,9 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
 
   Future<AnimeModel> _getAnimeFromId(String id) async {
     try {
-      final response = await dio.get(_baseUrl + '?info=$id');
+      final response = await dio.get(
+        _baseUrl + '?info=$id',
+      );
 
       final data = response.data[0];
 

@@ -108,7 +108,18 @@ class AnimeTvDetailsDataSource implements DetailsDataSource {
   @override
   Future<AnimeDetailsModel> getAnimeDetails(String id) async {
     try {
-      final response = await dio.get(_baseUrl + "?info=$id");
+      final response = await dio.get(
+        _baseUrl,
+        queryParameters: <String, String>{
+          'info': '$id',
+          ...streamingDataR,
+        },
+        options: Options(
+          headers: <String, String>{
+            ...(await authHeaders),
+          },
+        ),
+      );
 
       final data = response.data[0];
 
@@ -324,7 +335,7 @@ class AnimeTvDetailsDataSource implements DetailsDataSource {
           "label": episode["title"],
           "url": episode["location"],
           "urlHd": episode["locationsd"],
-          "urlFullHd": data["locationhd"],
+          "urlFullHd": episode["locationhd"],
           "imageUrl": targetAnime.imageUrl,
           "imageHttpHeaders": targetAnime.imageHttpHeaders,
           "stats": stats
