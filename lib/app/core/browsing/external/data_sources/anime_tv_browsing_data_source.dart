@@ -1,5 +1,7 @@
+import 'package:anime_dart/app/core/details/external/data_source/anime_tv_details_data_source.dart';
 import 'package:anime_dart/app/core/search/domain/entities/anime.dart';
 import 'package:anime_dart/app/core/watched/domain/repository/watched_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:anime_dart/app/constants/utils.dart';
@@ -70,7 +72,18 @@ class AnimeTvBrowsingDataSource implements BrowsingDataSource {
 
   Future<AnimeModel> _getAnimeFromId(String id) async {
     try {
-      final response = await dio.get(_baseUrl + '?info=$id');
+      final response = await dio.get(
+        _baseUrl,
+        queryParameters: <String, String>{
+          'info': '$id',
+          ...AnimeTvDetailsDataSource.streamingDataR,
+        },
+        options: Options(
+          headers: <String, String>{
+            ...(await AnimeTvDetailsDataSource.authHeaders),
+          },
+        ),
+      );
 
       final data = response.data[0];
 
