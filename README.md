@@ -45,13 +45,6 @@
 <br>
 <br>
 
-## Files
-
-- ### [Latest Release, Download Link](https://github.com/AnimeFlitch/flitch/releases/download/v1.0.4/app-release.apk)
-
-<br>
-<br>
-
 ## Printscreens - Dark Mode
 
 <table>
